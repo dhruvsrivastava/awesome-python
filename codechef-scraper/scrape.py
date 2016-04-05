@@ -4,9 +4,9 @@ from urllib2 import urlopen , HTTPError
 id_dict = {}
 
 #username
-username = "ironmandhruv"
+username = "neo1tech9_7"
 all_submissions = 0
-filename = username + ".txt"
+filename = username + "_monthly_submissions.txt"
 
 file = open(filename , "w")
 

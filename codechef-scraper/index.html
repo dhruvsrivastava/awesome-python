@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <script type="text/javascript" src="d3/d3.js"></script>
+
+        <style type="text/css">
+            div.bar {
+                display: inline-block;
+                width: 20px;
+                height: 75px;   /* Gets overriden by D3-assigned height below */
+                margin-right: 2px;
+                background-color: teal;
+            }
+        </style>
+
+    </head>
+    <body>
+        <script type="text/javascript">
+
+            var h = 500;
+            var w = 1000;
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("height" , h)
+                        .attr("width" , w);
+
+            var dataset = []
+            var lendata = 30
+            for(var i = 0;i < lendata;i++)
+                dataset.push(5 + Math.floor(Math.random() * 95))
+            var maxval = 0;
+            for (var i = 0; i < dataset.length; i++) {
+                if (dataset[i] > maxval)
+                    maxval = dataset[i];
+            }
+
+            svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("y" , function(d) {
+                return h - (d / maxval) * h;
+            })
+            .attr("x" ,  function(d , i) {
+                return i * (w / dataset.length);
+            })
+            .attr("width", (w / dataset.length) - 1)
+            .attr("height", function(d) {
+                    return (d / maxval) * h;
+            })
+            .attr("fill", function(d) {
+                return "rgb(0, 0, " + (d * 10) + ")";
+            });
+
+
+            svg.selectAll("text")
+               .data(dataset)
+               .enter()
+               .append("text")
+               .text(function(d) {
+                    return d;
+               })
+               .attr("x" , function(d , i) {
+                    return i * (w / dataset.length) + (w / dataset.length - 1) / 2;
+               })
+               .attr("y" , function(d) {
+                    return (h - (d / maxval) * h) + ((d / maxval) * h) / 2 ;
+               })
+               .attr("text-anchor" , "middle")
+               .attr("fill" , "white");
+
+
+            // var circles = svg.selectAll("circle")
+            //                  .data(dataset)
+            //                  .enter()
+            //                  .append("circle")
+
+            // circles.attr("cx" , function(d , i) {
+            //                     return (i * 50) + 25;
+            //              })
+            //         .attr("cy" , 25)
+            //         .attr("r" , function(d) {
+            //                     return d;
+            //              })
+        </script>
+    </body>
+</html>     
